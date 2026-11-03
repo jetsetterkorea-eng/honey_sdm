@@ -1,0 +1,12 @@
+{
+  "name": "honeys-landing",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": "22.x" },
+  "scripts": {
+    "build": "node scripts/check.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": { "google-auth-library": "^10.0.0" }
+}

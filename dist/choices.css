@@ -1,0 +1,290 @@
+/* Calculator choices: shared controls, then budget, destination and studio. */
+.quote-honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.quote-privacy { margin-bottom: 16px; padding: 16px; border-radius: 8px; background: var(--surface); }
+.quote-privacy-check { display: flex; align-items: flex-start; gap: 10px; color: var(--ink-700); font-size: 14px; line-height: 1.6; }
+.quote-privacy-check input { flex: none; width: 18px; height: 18px; margin-top: 2px; accent-color: var(--primary); }
+.quote-privacy-check b { color: var(--primary); font-weight: 500; }
+.quote-privacy details { margin-top: 10px; padding-left: 28px; color: var(--ink-500); font-size: 12px; line-height: 1.7; }
+.quote-privacy summary { cursor: pointer; }
+.quote-privacy details p { margin-top: 8px; }
+.quote-send-error { margin-bottom: 12px; color: var(--danger); font-size: 14px; line-height: 1.6; }
+#consult-form[aria-busy="true"] .submit { opacity: .6; cursor: wait; }
+[hidden] { display: none !important; }
+#calculator .choice-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+  opacity: 0;
+}
+#calculator :is(.budget-choice, .destination-choice, .studio-choice, .studio-alternative-choice, .extra-choice) {
+  position: relative;
+  min-width: 0;
+  border: 1px solid #dce3ec;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink-900);
+  transition: border-color 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
+}
+#calculator :is(.budget-choice, .destination-label, .studio-choice, .studio-alternative-choice, .extra-choice) { cursor: pointer; }
+#calculator :is(.budget-choice, .destination-choice, .studio-choice, .studio-alternative-choice, .extra-choice):has(.choice-input:checked) {
+  border-color: var(--primary);
+  background: var(--surface-active);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+#calculator :is(.budget-choice, .destination-choice, .studio-choice, .studio-alternative-choice, .extra-choice):has(.choice-input:focus-visible) {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+#calculator :is(.choice-check, .studio-pick, .hotel-choice-check), .studio-picker-list .studio-pick {
+  position: relative;
+  display: block;
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  border: 1px solid #c4cedb;
+  border-radius: 6px;
+  background: #f6f8fb;
+  transition: border-color 140ms ease, background-color 140ms ease;
+}
+#calculator :is(.choice-check, .studio-pick, .hotel-choice-check)::after, .studio-picker-list .studio-pick::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 7px;
+  width: 6px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+#calculator label:has(.choice-input:checked) :is(.choice-check, .studio-pick), .studio-picker-list [aria-pressed="true"] .studio-pick { border-color: var(--primary); background: var(--primary); }
+#calculator label:has(.choice-input:checked) :is(.choice-check, .studio-pick)::after, .studio-picker-list [aria-pressed="true"] .studio-pick::after { opacity: 1; }
+#calculator .is-selected-hotel .hotel-choice-check { border-color: var(--primary); background: var(--primary); }
+#calculator .is-selected-hotel .hotel-choice-check::after { opacity: 1; }
+#calculator :is(button, summary, [role="button"], select, #custom-studio):focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
+#calculator [hidden] { display: none !important; }
+
+/* Budget */
+#calculator .budget-choices { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+#calculator .budget-choice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 56px;
+  padding: 12px 16px;
+}
+#calculator .budget-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px; min-width: 0; line-height: 1.35; }
+#calculator .budget-price strong { font-size: 19px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -.4px; }
+#calculator .budget-price > span { color: var(--ink-700); font-size: 14px; }
+#calculator .budget-undecided-text { font-size: 14px; font-weight: 600; line-height: 1.5; }
+
+/* Destination */
+#calculator .destination-choices { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; gap: 12px; }
+#calculator .destination-label { display: flex; flex-direction: row; align-items: center; gap: 18px; padding: 14px 16px; }
+#calculator .destination-visual { display: block; flex: 0 0 112px; width: 112px; height: 86px; overflow: hidden; border-radius: 8px; background: var(--surface); }
+#calculator .destination-visual img { display: block; width: 100%; height: 100%; object-fit: cover; }
+#calculator .destination-copy { display: grid; grid-template-columns: minmax(0, 1fr) auto 22px; align-items: center; gap: 14px; flex: 1; min-width: 0; }
+#calculator .destination-name { display: contents; }
+#calculator .destination-name strong { grid-column: 1; grid-row: 1; }
+#calculator .destination-name .choice-check { grid-column: 3; grid-row: 1; }
+#calculator .destination-name strong { font-size: 18px; font-weight: 700; line-height: 1.4; }
+#calculator .destination-amount { grid-column: 2; grid-row: 1; display: block; margin: 0; text-align: right; }
+#calculator .destination-amount small { color: var(--ink-500); font-size: 12px; line-height: 1.5; }
+#calculator .destination-amount > span { color: var(--ink-700); font-size: 13px; white-space: nowrap; }
+#calculator .destination-amount .price-basis { display: block; margin-top: 3px; color: var(--ink-700); font-size: 14px; font-weight: 400; line-height: 1.45; }
+#calculator .destination-hotels .price-basis { margin-right: 5px; color: var(--ink-700); font-size: 13px; font-weight: 400; white-space: nowrap; }
+#calculator .destination-amount b { margin-right: 3px; color: var(--ink-900); font-size: 24px; font-weight: 700; letter-spacing: -.6px; }
+#calculator .destination-details { margin: 2px 0 0; border-top: 1px solid #e8edf3; }
+#calculator .destination-details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 16px;
+  color: var(--ink-700);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  list-style: none;
+  cursor: pointer;
+}
+#calculator .destination-disclosure-action { display: inline-flex; flex: none; align-items: center; gap: 6px; padding: 5px 0; color: var(--ink-700); font-size: 13px; }
+#calculator .destination-details .when-open, #calculator .destination-details[open] .when-closed { display: none; }
+#calculator .destination-details[open] .when-open { display: inline; }
+#calculator .destination-details summary::-webkit-details-marker { display: none; }
+#calculator .destination-details summary > span:first-child { min-width: 0; word-break: keep-all; }
+#calculator .destination-details-icon { flex: 0 0 16px; width: 16px; height: 16px; }
+#calculator .destination-details[open] .destination-details-icon { transform: rotate(180deg); }
+#calculator .destination-hotels { padding: 2px 14px 14px; }
+#calculator .destination-hotels dl { display: grid; gap: 6px; margin: 0; }
+#calculator .destination-hotels dl > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 48px;
+  padding: 11px 12px;
+  border: 1px solid #dce3ec;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
+}
+#calculator .destination-hotels dt { flex: 1; min-width: 0; color: var(--ink-700); font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+#calculator .destination-hotels dd { position: relative; flex: none; margin: 0; padding-right: 34px; color: var(--ink-700); font-size: 13px; white-space: nowrap; }
+#calculator .destination-hotels .hotel-choice-check { position: absolute; top: 50%; right: 0; transform: translateY(-50%); }
+#calculator .destination-hotels dd b { color: var(--ink-900); font-size: 15px; font-weight: 700; }
+#calculator .destination-hotels .is-selected-hotel { border-color: var(--primary); background: var(--surface-active); box-shadow: inset 0 0 0 1px var(--primary); }
+#calculator .destination-hotels .is-selected-hotel :is(dt, dd, b) { color: var(--primary); }
+#calculator .destination-hotels > p { margin: 8px 2px 0; color: var(--ink-700); font-size: 14px; line-height: 1.6; }
+#calculator .destination-undecided { grid-column: 1 / -1; }
+#calculator .destination-undecided .destination-label { flex-direction: row; align-items: center; gap: 12px; padding: 14px 16px; }
+#calculator .destination-undecided .destination-copy { flex: 1; }
+
+#calculator .destination-caption { grid-column: 2; grid-row: 1; display: block; margin: 0; color: var(--ink-700); font-size: 13px; line-height: 1.5; }
+#calculator .journey-price-note { margin: 14px 0 0; color: var(--ink-700); font-size: 14px; line-height: 1.65; word-break: keep-all; }
+
+/* Studio */
+#calculator .studio-price-basis { margin: 0 0 14px; color: var(--ink-700); font-size: 14px; line-height: 1.6; }
+#calculator .studio-choice-copy { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+#calculator .studio-choice-price { font-size: 16px; font-weight: 700; color: var(--ink-900); }
+#calculator .studio-choice-price small { margin-left: 2px; font-size: 11px; font-weight: 500; color: var(--ink-500); }
+#calculator .studio-choice-note { font-size: 14px; color: var(--ink-700); line-height: 1.5; }
+#calculator .studio-plan-field { padding: 16px; margin-top: 14px; border-radius: 10px; background: #eef3fc; }
+#calculator .studio-plan-field label { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px; font-weight: 600; }
+#calculator .studio-plan-field label span { font-weight: 400; color: var(--ink-500); }
+#calculator .studio-plan-field select { width: 100%; min-height: 44px; padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: #fff; font: inherit; font-size: 14px; }
+
+#calculator .studio-layout, #calculator .studio-directory { min-width: 0; }
+#calculator .studio-filter-toolbar { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
+#calculator .studio-area-filters { display: flex; flex-wrap: wrap; gap: 6px; }
+#calculator .studio-area-filters button {
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1px solid #dce3ec;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink-700);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  cursor: pointer;
+}
+#calculator .studio-area-filters button[aria-pressed="true"] { border-color: var(--primary); background: var(--surface-active); color: var(--primary); }
+#calculator .studio-choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+#calculator .studio-choice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 54px;
+  padding: 12px 14px;
+}
+#calculator .studio-choice-name { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 7px; min-width: 0; font-size: 14px; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
+#calculator .studio-choice-name small { padding: 2px 5px; border-radius: 4px; background: var(--surface); color: var(--ink-500); font-size: 10px; font-weight: 500; line-height: 1.4; white-space: nowrap; }
+#calculator .studio-alternatives-title { margin: 24px 0 14px; color: var(--ink-900); font-size: var(--font-card-heading); font-weight: var(--weight-semibold); letter-spacing: -.025em; line-height: 1.48; }
+#calculator .studio-alternatives { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: 8px; }
+#calculator .studio-custom { min-width: 0; }
+#calculator .studio-alternative-choice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  min-height: 72px;
+  margin: 0;
+  padding: 13px 14px;
+}
+#calculator .studio-option-copy { display: flex; flex-direction: column; gap: 4px; min-width: 0; line-height: 1.5; }
+#calculator .studio-option-copy strong { font-size: 14px; font-weight: 600; }
+#calculator .studio-option-copy small { color: var(--ink-700); font-size: 13px; word-break: keep-all; }
+#calculator .studio-custom-field { display: grid; gap: 8px; margin-top: 14px; }
+#calculator .studio-custom-field > label { color: var(--ink-700); font-size: 12px; font-weight: 600; line-height: 1.5; }
+#calculator #custom-studio { display: block; width: 100%; min-width: 0; min-height: 44px; padding: 11px 13px; border: 1px solid #dce3ec; border-radius: 10px; background: #fff; color: var(--ink-900); font-size: 14px; line-height: 1.5; }
+#calculator #custom-studio::placeholder { color: var(--ink-400); }
+#calculator .studio-notice { margin: 12px 0 0; color: var(--ink-700); font-size: 14px; line-height: 1.65; word-break: keep-all; }
+
+/* Optional extras use the same selection pattern as the first three questions. */
+#calculator .extras-choices { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+#calculator .extra-choice { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px; min-height: 76px; }
+#calculator .extra-choice-copy { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+#calculator .extra-choice-copy strong { font-size: 14px; font-weight: 600; line-height: 1.5; }
+#calculator .extra-choice-copy small { font-size: 14px; color: var(--ink-700); line-height: 1.5; }
+#calculator .extra-none { min-height: 54px; padding: 14px 16px; }
+#calculator .extra-selection-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 20px; margin: 18px 0 10px; font-size: 14px; line-height: 1.5; color: var(--ink-700); }
+#calculator #extra-review-status { color: var(--primary); font-weight: 600; }
+#calculator #extra-selection-hint { margin-left: auto; white-space: nowrap; }
+#calculator .extras-price-note { margin: 14px 0 0; font-size: 14px; color: var(--ink-700); line-height: 1.65; }
+#calculator #live-calc-extra-names { display: grid; gap: 8px; margin: 0 0 18px; padding: 0; list-style: none; }
+#calculator #live-calc-extra-names li { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--ink-700); line-height: 1.5; }
+#calculator #live-calc-extra-names li span:last-child { flex: none; font-variant-numeric: tabular-nums; }
+.studio-rate-note { display: block; margin-top: 4px; color: var(--ink-700); font-size: 13px; font-weight: 400; line-height: 1.5; }
+
+@media (hover: hover) {
+  #calculator :is(.budget-choice, .destination-choice, .studio-choice, .studio-alternative-choice, .extra-choice):not(:has(.choice-input:checked)):hover { border-color: #8caee2; background: #f7faff; }
+  #calculator :is(.budget-choice, .destination-label, .studio-choice, .studio-alternative-choice, .extra-choice):hover :is(.choice-check, .studio-pick) { border-color: var(--primary); }
+  #calculator .studio-area-filters button:hover { background: var(--surface-active); }
+  #calculator .destination-hotels dl > div:not(.is-selected-hotel):hover { border-color: #8caee2; background: #f7faff; }
+  #calculator .destination-hotels dl > div:hover .hotel-choice-check { border-color: var(--primary); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #calculator :is(.budget-choice, .destination-choice, .studio-choice, .studio-alternative-choice, .choice-check, .studio-pick, .hotel-choice-check),
+  #calculator :is(.choice-check, .studio-pick, .hotel-choice-check)::after,
+  #calculator .destination-hotels dl > div { transition: none; }
+}
+@media (max-width: 600px) {
+  #calculator .extra-choice { padding: 12px; gap: 8px; }
+  #calculator .extra-choice-copy strong { font-size: 13px; }
+  #calculator .studio-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #calculator .budget-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #calculator .budget-choice { min-height: 68px; padding: 12px; gap: 8px; }
+  #calculator .budget-price { gap: 1px 4px; }
+  #calculator .budget-price strong { font-size: 17px; }
+  #calculator .budget-price > span { font-size: 12px; }
+  #calculator .budget-undecided { grid-column: 1 / -1; min-height: 54px; }
+  #calculator .budget-undecided-text { font-size: 13px; }
+  #calculator .destination-choices { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  #calculator .destination-label { flex-direction: row; align-items: center; gap: 14px; }
+  #calculator .destination-visual { flex: 0 0 56px; width: 56px; height: 64px; aspect-ratio: auto; }
+  #calculator .destination-copy { flex: 1; }
+  #calculator .destination-name strong { font-size: 17px; }
+  #calculator .destination-copy { gap: 8px; }
+  #calculator .destination-amount { margin: 0; }
+  #calculator .destination-amount b { font-size: 20px; }
+  #calculator .destination-amount > span { font-size: 11px; }
+  #calculator .destination-details summary { min-height: 44px; padding-inline: 14px; }
+  #calculator .destination-hotels { padding-inline: 12px; }
+  #calculator .destination-hotels dl > div { padding-inline: 10px; }
+  #calculator .destination-hotels dt { font-size: 14px; }
+  #calculator .studio-area-filters { gap: 5px; }
+  #calculator .studio-area-filters button { flex: 1; padding-inline: 10px; white-space: nowrap; }
+  #calculator .studio-choice { padding: 11px 12px; gap: 8px; }
+  #calculator .studio-choice-name { font-size: 13px; gap: 4px; }
+  #calculator .studio-alternative-choice { padding: 12px; gap: 8px; }
+  #calculator .studio-option-copy strong { font-size: 13px; }
+  #calculator .studio-option-copy small { font-size: 13px; }
+  #calculator #custom-studio { font-size: 16px; }
+}
+@media (max-width: 379px) {
+  #calculator .destination-label { padding: 12px 10px; gap: 8px; }
+  #calculator .destination-visual { flex-basis: 40px; width: 40px; height: 56px; }
+  #calculator .destination-copy { gap: 6px; }
+  #calculator .destination-amount b { font-size: 18px; }
+  #calculator .destination-undecided .destination-label { padding-inline: 10px; }
+  #calculator .destination-caption { font-size: 12px; }
+  #calculator .studio-choices, #calculator .studio-alternatives { grid-template-columns: minmax(0, 1fr); }
+  #calculator .studio-alternative-choice { min-height: 64px; }
+  #calculator .studio-area-filters button { padding-inline: 8px; font-size: 12px; }
+}
