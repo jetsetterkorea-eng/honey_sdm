@@ -12,7 +12,27 @@
   "headers": [
     {
       "source": "/api/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "honeysdm-git-main-jetsetter1.vercel.app"
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
     }
   ]
 }
