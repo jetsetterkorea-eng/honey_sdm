@@ -104,6 +104,14 @@
 #calculator .destination-amount .price-basis { display: block; margin-top: 3px; color: var(--ink-700); font-size: 14px; font-weight: 400; line-height: 1.45; }
 #calculator .destination-hotels .price-basis { margin-right: 5px; color: var(--ink-700); font-size: 13px; font-weight: 400; white-space: nowrap; }
 #calculator .destination-amount b { margin-right: 3px; color: var(--ink-900); font-size: 24px; font-weight: 700; letter-spacing: -.6px; }
+/* These destinations use one consultation hotel value, with no hotel picker. */
+#calculator .destination-simple .destination-label { min-height: 100px; padding-block: 16px; }
+#calculator .destination-stay-note { display: block; margin-top: 6px; color: var(--ink-500); font-size: 13px; font-weight: 400; letter-spacing: 0; line-height: 1.5; }
+#calculator .destination-amount .destination-person-price { display: block; margin-top: 5px; color: var(--ink-500); font-size: 12px; font-weight: 400; line-height: 1.5; white-space: nowrap; }
+#calculator .destination-simple .price-basis { margin: 0; font-size: 12px; }
+@media (hover: hover) {
+  #calculator .destination-choice:not(:has(.choice-input:checked)):hover { border-color: #a4b7d1; }
+}
 #calculator .destination-details { margin: 2px 0 0; border-top: 1px solid #e8edf3; }
 #calculator .destination-details summary {
   display: flex;
@@ -264,6 +272,9 @@
   #calculator .destination-amount { margin: 0; }
   #calculator .destination-amount b { font-size: 20px; }
   #calculator .destination-amount > span { font-size: 11px; }
+  #calculator .destination-simple .destination-label { min-height: 96px; }
+  #calculator .destination-stay-note { font-size: 12px; }
+  #calculator .destination-amount .destination-person-price { font-size: 11px; }
   #calculator .destination-details summary { min-height: 44px; padding-inline: 14px; }
   #calculator .destination-hotels { padding-inline: 12px; }
   #calculator .destination-hotels dl > div { padding-inline: 10px; }
