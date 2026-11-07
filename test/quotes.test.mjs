@@ -30,6 +30,51 @@ test('canonical pricing ignores client amounts and does not add studio/extras to
   assert.equal(quote.studioStart, 88);
   assert.equal(quote.extras.length, 1);
 });
+for (const [region, perPerson] of [['시드니', 199], ['코사무이', 169], ['모리셔스', 299]]) {
+  test(`${region}: region-only selection uses the canonical two-person price in the saved row`, async () => {
+    let saved;
+    const response = await api(makeBody({
+      region, hotel: '', bundleStart: 1, studioStart: 1, extras: ['헬퍼비']
+    }), async quote => { saved = quote; });
+    assert.equal(response.code, 200);
+    assert.equal(saved.region, region);
+    assert.equal(saved.hotel, '상담 시 안내');
+    assert.equal(saved.bundleStart, perPerson * 2);
+    assert.equal(saved.studioStart, 88);
+    assert.equal(saved.extras.length, 1);
+    const row = quoteRow(saved);
+    assert.equal(row[HEADERS.indexOf('여행지')], region);
+    assert.equal(row[HEADERS.indexOf('희망 숙소')], '상담 시 안내');
+    assert.equal(row[HEADERS.indexOf('결합 시작가 (만원·2인)')], perPerson * 2);
+  });
+  test(`${region}: omitted, empty and explicit consultation hotel normalize identically`, () => {
+    for (const hotel of [undefined, '', '  ', '상담 시 안내']) {
+      const quote = normalizeQuote(makeBody({ region, hotel }), policyVersion);
+      assert.equal(quote.hotel, '상담 시 안내');
+      assert.equal(quote.bundleStart, perPerson * 2);
+    }
+  });
+  test(`${region}: a stale or invented hotel is rejected before saving`, async () => {
+    for (const hotel of ['물리아', '추천 숙소', 'toString', '__proto__']) {
+      const result = await api(makeBody({ region, hotel }), () => assert.fail('must not save'));
+      assert.equal(result.code, 400);
+      assert.match(result.body.message, /숙소/);
+    }
+  });
+}
+test('existing destinations retain their region and hotel starting prices', () => {
+  for (const [region, hotel, expected] of [
+    ['발리', '', 398], ['발리', '풀빌라', 398], ['발리', '물리아', 498],
+    ['발리', '아야나', 512], ['발리', '주메이라', 564],
+    ['하와이', '', 398], ['하와이', '아웃리거 와이키키 파라다이스', 398],
+    ['하와이', '아웃리거 비치콤버', 436],
+    ['몰디브', '', 778], ['몰디브', '벨라사루', 778], ['몰디브', '선시암 올후벨리', 798]
+  ]) {
+    const quote = normalizeQuote(makeBody({ region, hotel }), policyVersion);
+    assert.equal(quote.bundleStart, expected);
+    assert.equal(quote.hotel, hotel);
+  }
+});
 test('all undecided items are permitted and produce no invented price', () => {
   const quote = normalizeQuote(makeBody({ region: '', hotel: '', studioBase: '', budget: '' }), policyVersion);
   assert.equal(quote.bundleStart, null);
