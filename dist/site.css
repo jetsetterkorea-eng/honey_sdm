@@ -2005,6 +2005,29 @@ dialog#credits-dialog a {
   gap: 4px;
 }
 
+#top .hero-more-destinations {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin: 8px 4px 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+#top .hero-more-destinations > span {
+  color: var(--ink-500);
+}
+
+#top .hero-more-destinations strong {
+  color: var(--ink-700);
+  font-size: inherit;
+  font-weight: var(--weight-semibold);
+}
+
 #benefits {
   background: #f5f6f8;
 }
