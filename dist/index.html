@@ -104,7 +104,73 @@
     img.src='data:image/svg+xml;charset=utf-8,' + encodeURIComponent(wedding ? fallbackByType.wedding : fallbackByType.beach);
   }, true);
 })();
-</script><link rel="stylesheet" href="site.css?v=destinations-20261107"><link rel="stylesheet" href="choices.css?v=destinations-20261107"><link rel="stylesheet" href="comparison.css?v=destinations-20261107"></head>
+</script><link rel="stylesheet" href="site.css?v=destinations-20261107"><link rel="stylesheet" href="choices.css?v=destinations-20261107"><link rel="stylesheet" href="comparison.css?v=destinations-20261107">
+<style id="honeys-company-footer-styles">
+/* Footer styles stay in this file so index.html can be replaced on its own. */
+footer.honeys-footer {
+  padding: 36px 0 24px;
+  background: #f8f9fb;
+  border-top: 1px solid var(--line-strong, #e5e8eb);
+}
+.honeys-footer .footer-top {
+  align-items: center;
+  gap: 20px 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line-strong, #e5e8eb);
+}
+.honeys-footer .footer-brand { display: grid; gap: 9px; }
+.honeys-footer .wordmark { display: inline-flex; align-items: center; gap: 8px; width: fit-content; }
+.honeys-footer .footer-intro { color: var(--ink-500, #586576); font-size: 12px; line-height: 1.6; }
+.honeys-footer .footer-sites { display: flex; flex-wrap: wrap; gap: 8px; }
+.honeys-footer .footer-site-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  padding: 11px 14px;
+  border: 1px solid var(--line-strong, #e5e8eb);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink-700, #333d4b);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  transition: border-color .15s ease, background-color .15s ease;
+}
+.honeys-footer .footer-site-action { margin-left: 4px; }
+.honeys-footer .footer-site-link svg { width: 14px; height: 14px; flex: none; color: var(--ink-400, #667487); }
+.honeys-footer .footer-site-link:hover { background: #eef4ff; border-color: #bdcff0; }
+.honeys-footer .footer-bottom { display: block; padding-top: 22px; line-height: 1.75; }
+.honeys-footer .footer-company-name { display: block; color: var(--ink-700, #333d4b); font-size: 15px; font-weight: 700; }
+.honeys-footer .footer-details { display: grid; gap: 6px; margin-top: 11px; }
+.honeys-footer .footer-info-row { display: flex; flex-wrap: wrap; gap: 6px 22px; }
+.honeys-footer .footer-info-item { display: flex; flex-wrap: wrap; align-items: baseline; gap: 1px 8px; max-width: 100%; }
+.honeys-footer .footer-details dt { color: var(--ink-400, #667487); font-size: 12px; font-weight: 400; }
+.honeys-footer .footer-details dd { margin: 0; color: var(--ink-500, #586576); font-size: 12px; overflow-wrap: anywhere; }
+.honeys-footer .footer-address { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; font-size: 12px; font-style: normal; line-height: 1.75; }
+.honeys-footer .footer-address-label { flex: none; color: var(--ink-400, #667487); }
+.honeys-footer .footer-address-text { color: var(--ink-500, #586576); overflow-wrap: anywhere; }
+.honeys-footer .footer-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 20px; margin-top: 19px; }
+.honeys-footer .footer-copyright { color: var(--ink-400, #667487); font-size: 11px; line-height: 1.7; letter-spacing: 0; }
+.honeys-footer .footer-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
+.honeys-footer .footer-back-top { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--ink-500, #586576); font-size: 12px; }
+.honeys-footer .footer-back-top:hover { color: var(--ink-900, #191f28); }
+@media (max-width: 680px) {
+  footer.honeys-footer { padding: 30px 0 24px; }
+  .honeys-footer .footer-top { flex-direction: column; align-items: stretch; gap: 20px; padding-bottom: 22px; }
+  .honeys-footer .footer-sites { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .honeys-footer .footer-site-link { min-height: 62px; padding: 10px 12px; gap: 6px; }
+  .honeys-footer .footer-site-action { display: block; margin: 3px 0 0; color: var(--ink-500, #586576); font-size: 11px; font-weight: 400; }
+  .honeys-footer .footer-info-row { gap: 5px 18px; }
+  .honeys-footer .footer-info-row--registration { display: grid; gap: 5px; }
+  .honeys-footer .footer-address { margin-top: 9px; }
+  .honeys-footer .footer-meta { align-items: flex-start; flex-direction: column; gap: 5px; margin-top: 18px; }
+  .honeys-footer .footer-tools { justify-content: space-between; width: 100%; }
+  .honeys-footer .footer-back-top { margin-left: auto; }
+}
+</style>
+</head>
 <body>
 <a class="skip" href="#main">본문으로 이동</a>
 <header class="section-nav">
@@ -691,56 +757,50 @@
 <button class="toss-dock-btn" type="button" id="dock-action" aria-controls="consult-form" data-action="consult">무료 견적 상담 <span aria-hidden="true">→</span></button>
 </div>
 </div>
-<footer>
+<footer class="honeys-footer" aria-label="회사 정보">
 <div class="wrap">
 <div class="footer-top">
-<a aria-label="허니스드메 홈" class="wordmark" href="#top"><img alt="" class="brand-symbol" height="24" src='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"%3E%3Crect width="40" height="40" rx="8" fill="%233182f6"/%3E%3Cpath d="M10 9h5v9h10V9h5v22h-5v-9H15v9h-5z" fill="white"/%3E%3C/svg%3E' width="24"/><span class="brand-name"><b>허니</b><span>웨딩촬영</span></span></a>
-<p>신혼여행과 웨딩촬영을 함께 준비하는 서비스</p>
-<a href="#top">맨 위로 ↑</a>
+<div class="footer-brand">
+<a aria-label="허니스드메 홈" class="wordmark" href="#top"><img alt="" class="brand-symbol" height="24" src='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"%3E%3Crect width="40" height="40" rx="8" fill="%233182f6"/%3E%3Cpath d="M10 9h5v9h10V9h5v22h-5v-9H15v9h-5z" fill="white"/%3E%3C/svg%3E' width="24"/><span class="brand-name"><b>허니</b><span>스드메</span></span></a>
+<p class="footer-intro">신혼여행과 웨딩촬영을 함께 준비하는 서비스</p>
+</div>
+<nav class="footer-sites" aria-label="관련 사이트">
+<a class="footer-site-link" href="https://daclub.kr/" target="_blank" rel="noopener noreferrer" aria-label="드림얼라이언스 바로가기 (새 창)">
+<span>드림얼라이언스<span class="footer-site-action">바로가기</span></span>
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+</a>
+<a class="footer-site-link" href="https://jetsetter.kr/" target="_blank" rel="noopener noreferrer" aria-label="젯셋터 바로가기 (새 창)">
+<span>젯셋터<span class="footer-site-action">바로가기</span></span>
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+</a>
+</nav>
 </div>
 <div class="footer-bottom">
-<p>랜딩 페이지 시안 · 가격과 제휴 정보는 운영 전 확인이 필요합니다.<br/>사업자 정보·개인정보 처리방침·실제 상담 접수는 운영 정보 확정 후 연결됩니다.</p>
+<!-- Keep the existing lead-form.js update target hidden for single-file compatibility. -->
+<p hidden aria-hidden="true"></p>
+<strong class="footer-company-name">(주) 드림얼라이언스</strong>
+<div class="footer-details">
+<dl class="footer-info-row">
+<div class="footer-info-item"><dt>대표자</dt><dd>이상훈</dd></div>
+<div class="footer-info-item"><dt>TEL</dt><dd>02-6958-6330</dd></div>
+<div class="footer-info-item"><dt>E-MAIL</dt><dd>john@daclub.kr</dd></div>
+</dl>
+<dl class="footer-info-row footer-info-row--registration">
+<div class="footer-info-item"><dt>Corporate registration number.</dt><dd>725-87-03048</dd></div>
+<div class="footer-info-item"><dt>E-commerce Permit.</dt><dd>2024-서울종로-0757호</dd></div>
+</dl>
+</div>
+<address class="footer-address"><span class="footer-address-label">Address.</span><span class="footer-address-text">서울특별시 종로구 경희궁길 36 경희당빌딩 7층 (03175)</span></address>
+<div class="footer-meta">
+<small class="footer-copyright">Copyright ⓒ(주)드림얼라이언스. ALLRIGHT RESERVED.</small>
+<div class="footer-tools">
 <button aria-label="PC 레이아웃과 모바일 레이아웃 전환" aria-pressed="false" class="honeys-view-switch" id="honeys-view-switch" type="button"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewbox="0 0 24 24"><rect height="12" rx="1.5" width="18" x="3" y="4"></rect><path d="M8 20h8m-4-4v4"></path></svg><span id="honeys-view-switch-label">PC 레이아웃 보기</span></button>
-<button id="credits-open">사진 출처</button>
+<a class="footer-back-top" href="#top">맨 위로 <span aria-hidden="true">↑</span></a>
+</div>
+</div>
 </div>
 </div>
 </footer>
-<dialog aria-labelledby="credits-title" id="credits-dialog">
-<div class="dialog-head">
-<h2 id="credits-title">사진 출처</h2>
-<button aria-label="사진 출처 닫기" id="credits-close">×</button>
-</div>
-<p>여행지와 웨딩촬영 분위기를 위한 참고 이미지입니다.<br/>표시된 숙소나 스튜디오의 실제 상품 사진이 아닙니다.</p>
-<ul>
-<li>
-<a href="https://www.pexels.com/photo/8681468/" rel="noopener noreferrer" target="_blank">Ksu &amp; Eli Studio / Pexels ↗</a>
-</li>
-<li>
-<a href="https://unsplash.com/photos/XHOEK_LnEPI" rel="noopener noreferrer" target="_blank">Ivan Theodoulou / Unsplash ↗</a>
-</li>
-<li>
-<a href="https://www.pexels.com/photo/2259226/" rel="noopener noreferrer" target="_blank">Darrell Fraser / Pexels ↗</a>
-</li>
-<li>
-<a href="https://unsplash.com/photos/qgeP9bp-kgw" rel="noopener noreferrer" target="_blank">Tim Foster / Unsplash ↗</a>
-</li>
-<li>
-<a href="https://unsplash.com/photos/tiuvKE-_0rc" rel="noopener noreferrer" target="_blank">Shaain Ibrahim / Unsplash ↗</a>
-</li>
-<li>
-<a href="https://unsplash.com/photos/XiiexZ2jjrI" rel="noopener noreferrer" target="_blank">Tom Pumford / Unsplash ↗</a>
-</li>
-<li>
-<a href="https://unsplash.com/photos/sydney-opera-house-mlw5KDesQrA" rel="noopener noreferrer" target="_blank">시드니 · Weiqi Xiong / Unsplash ↗</a>
-</li>
-<li>
-<a href="https://unsplash.com/photos/an-aerial-view-of-the-ocean-and-a-beach-QgiBOJuTTv0" rel="noopener noreferrer" target="_blank">코사무이 · Anatolii Shcherbyna / Unsplash ↗</a>
-</li>
-<li>
-<a href="https://unsplash.com/photos/green-and-black-rock-formation-on-blue-sea-under-blue-and-white-cloudy-sky-during-daytime-Qxxv8M2_aNI" rel="noopener noreferrer" target="_blank">모리셔스 · Xavier Coiffic / Unsplash ↗</a>
-</li>
-</ul>
-</dialog>
 <script src="lead-form.js?v=1" defer></script>
 <script src="app.js?v=destinations-20261107" defer></script>
 </body>
