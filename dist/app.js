@@ -1,9 +1,12 @@
 
       document.addEventListener("DOMContentLoaded", () => {
         const REGION_PRICING = {
-          "발리": { bundleStart: 398 },
-          "하와이": { bundleStart: 398 },
-          "몰디브": { bundleStart: 778 }
+          "발리": { "bundleStart": 398 },
+          "하와이": { "bundleStart": 398 },
+          "몰디브": { "bundleStart": 778 },
+          "시드니": { "bundleStart": 398, "defaultHotel": "상담 시 안내" },
+          "코사무이": { "bundleStart": 338, "defaultHotel": "상담 시 안내" },
+          "모리셔스": { "bundleStart": 598, "defaultHotel": "상담 시 안내" }
         };
 
         // Source: proposal 1, 22 studios / 26 plans, individual contract starts in KRW 10,000.
@@ -402,6 +405,13 @@
           return checked ? checked.value : "";
         }
 
+        function getDestinationLabel(region) {
+          if (!selectedHotel) return region;
+          const hotel = REGION_PRICING[region]?.defaultHotel === selectedHotel.name
+            ? '숙소 ' + selectedHotel.name : selectedHotel.name;
+          return `${region} (${hotel})`;
+        }
+
         const studioPlanSelect = document.getElementById('studio-plan');
         let renderedStudioBase = null;
         function getStudioBase() {
@@ -448,7 +458,7 @@
           const studioNote = getStudioPricing()?.note;
           const studioCondition = studioVal + (studioNote ? ' (' + studioNote + ')' : '');
 
-          const regionWithHotel = selectedHotel ? `${regionVal} (${selectedHotel.name})` : regionVal;
+          const regionWithHotel = getDestinationLabel(regionVal);
 
           const customField = document.getElementById("custom-studio-field");
           if (customField) customField.hidden = !document.querySelector('input[name="journey-studio"][value="custom"]').checked;
@@ -617,27 +627,54 @@
 
         // All entry points share one destination and, when applicable, one hotel.
         function selectDestination(region, hotel = selectedHotel) {
-          selectedHotel = hotel?.region === region ? hotel : null;
+          const pricing = REGION_PRICING[region];
+          // Region-only choices still carry a canonical hotel value for consultation and storage.
+          selectedHotel = pricing?.defaultHotel
+            ? { region, name: pricing.defaultHotel, bundleStart: pricing.bundleStart }
+            : hotel?.region === region ? hotel : null;
           journeyRegions.forEach(input => { input.checked = input.value === region; });
           comparisonRegions.forEach(input => { input.checked = input.value === region; });
           const selected = comparisonRegions.find(input => input.checked);
           if (selected) {
-            const photo = selected.closest('label').querySelector('img').cloneNode(false);
-            compRegionCurrent.replaceChildren(photo, region);
+            compRegionCurrent.textContent = region;
           } else {
-            compRegionCurrent.textContent = '여행지를 선택해 주세요';
+            compRegionCurrent.textContent = region === '아직 미정' ? '상담 후 결정' : '여행지를 선택해 주세요';
           }
           expandSelectedHotels(region);
           reflectSelectedHotel();
           syncAllSelections();
+          document.getElementById('journey-selection-note').textContent = pricing
+            ? `${getDestinationLabel(region)} 선택. 허니문 2인과 웨딩촬영 1회, ${selectedHotel?.bundleStart ?? pricing.bundleStart}만원부터.`
+            : region === '아직 미정' ? '여행지는 상담 후 결정합니다.' : '';
         }
 
+        function closeRegionDropdown(returnFocus = false) {
+          compDropdown.open = false;
+          if (returnFocus) compDropdown.querySelector('summary').focus({ preventScroll: true });
+        }
         comparisonRegions.forEach((radio) => {
           radio.addEventListener('change', () => selectDestination(radio.value));
-          radio.addEventListener('click', () => {
-            compDropdown.open = false;
-            compDropdown.querySelector('summary').focus({preventScroll: true});
+          radio.addEventListener('click', (event) => {
+            // Keep the list open while moving through native radios with arrow keys.
+            if (event.detail > 0) closeRegionDropdown(true);
           });
+        });
+        compDropdown.addEventListener('keydown', (event) => {
+          if (!compDropdown.open) return;
+          if (event.key === 'Escape') {
+            event.preventDefault();
+            closeRegionDropdown(true);
+          } else if (event.key === 'Enter' && event.target.matches('input[name="comparison-region"]')) {
+            event.preventDefault();
+            selectDestination(event.target.value);
+            closeRegionDropdown(true);
+          }
+        });
+        compDropdown.addEventListener('focusout', (event) => {
+          if (event.relatedTarget && !compDropdown.contains(event.relatedTarget)) closeRegionDropdown();
+        });
+        document.addEventListener('pointerdown', (event) => {
+          if (compDropdown.open && !compDropdown.contains(event.target)) closeRegionDropdown();
         });
 
         const extraChoices = Array.from(document.querySelectorAll('input[name="journey-extra"]'));
@@ -665,7 +702,7 @@
           const baseStudio = getStudioBase();
           const studioPricing = getStudioPricing();
           const regionDisplay = hasRegion
-            ? (selectedHotel ? regionName + ' (' + selectedHotel.name + ')' : regionName)
+            ? getDestinationLabel(regionName)
             : '여행지 미정';
           // The published bundle start never changes with a studio or review-item selection.
           const bundleStart = hasRegion ? (selectedHotel?.bundleStart ?? regionInfo.bundleStart) : null;
