@@ -1,12 +1,10 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "functions": {
-    "api/quotes.mjs": {
-      "maxDuration": 30,
-      "includeFiles": "docs/studio-source.json"
+    "api/applications.mjs": {
+      "maxDuration": 30
     }
   },
   "headers": [
@@ -16,21 +14,6 @@
         {
           "key": "Cache-Control",
           "value": "no-store"
-        }
-      ]
-    },
-    {
-      "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "honeysdm-git-main-jetsetter1.vercel.app"
-        }
-      ],
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, follow"
         }
       ]
     }

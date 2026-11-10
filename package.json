@@ -1,12 +1,16 @@
 {
-  "name": "honeys-landing",
+  "name": "jetsetter-academy-2",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "engines": { "node": "22.x" },
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
-    "build": "node scripts/check.mjs",
+    "build": "node --check api/applications.mjs",
     "test": "node --test test/*.test.mjs"
   },
-  "dependencies": { "google-auth-library": "^10.0.0" }
+  "dependencies": {
+    "google-auth-library": "^10.0.0"
+  }
 }
