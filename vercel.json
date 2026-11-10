@@ -7,9 +7,6 @@
     "api/quotes.mjs": {
       "maxDuration": 30,
       "includeFiles": "docs/studio-source.json"
-    },
-    "api/applications.mjs": {
-      "maxDuration": 30
     }
   },
   "headers": [
